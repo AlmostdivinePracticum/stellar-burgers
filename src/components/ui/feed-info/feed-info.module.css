@@ -32,3 +32,12 @@
 .content {
   text-align: left;
 }
+
+.link {
+    text-decoration: none;
+    color: #00cccc;
+}
+
+.link:hover {
+    color: #fff;
+}

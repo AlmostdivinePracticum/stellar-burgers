@@ -73,10 +73,19 @@ type TOrdersResponse = TServerResponse<{
 
 export const getIngredientsApi = () =>
   fetch(`${URL}/ingredients`)
-    .then((res) => checkResponse<TIngredientsResponse>(res))
-    .then((data) => {
+    .then((res) => {
+      if (!res.ok) {
+        return Promise.reject(new Error(`HTTP error! status: ${res.status}`));
+      }
+      return res.json();
+    })
+    .then((data: TIngredientsResponse) => {
       if (data?.success) return data.data;
-      return Promise.reject(data);
+      return Promise.reject('API returned success=false');
+    })
+    .catch((err) => {
+      console.error('getIngredientsApi error:', err);
+      return Promise.reject('Не удалось загрузить ингредиенты');
     });
 
 export const getFeedsApi = () =>
