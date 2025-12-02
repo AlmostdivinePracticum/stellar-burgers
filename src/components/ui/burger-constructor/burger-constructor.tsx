@@ -19,7 +19,8 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
   closeOrderModal,
   isOrderDisabled,
   onMoveUp,
-  onMoveDown
+  onMoveDown,
+  onRemove
 }) => (
   <section className={styles.burger_constructor}>
     {constructorItems.bun ? (
@@ -50,6 +51,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
               key={item.id}
               onMoveUp={() => onMoveUp?.(index)}
               onMoveDown={() => onMoveDown?.(index)}
+              onRemove={() => onRemove?.(item.id)}
             />
           )
         )

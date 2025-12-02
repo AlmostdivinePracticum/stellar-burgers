@@ -1,6 +1,8 @@
 import { RefObject } from 'react';
 import { TIngredient, TTabMode } from '@utils-types';
 
+export type TIngredientsCounters = Record<string, number>;
+
 export type BurgerIngredientsUIProps = {
   currentTab: TTabMode;
   buns: TIngredient[];
@@ -13,4 +15,5 @@ export type BurgerIngredientsUIProps = {
   mainsRef: (node?: Element | null | undefined) => void;
   saucesRef: (node?: Element | null | undefined) => void;
   onTabClick: (val: string) => void;
+  ingredientsCounters: TIngredientsCounters;
 };

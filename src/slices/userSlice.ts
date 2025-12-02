@@ -9,6 +9,7 @@ import {
 } from '@api';
 import { TUser } from '@utils-types';
 import { deleteCookie, setCookie } from '../utils/cookie';
+import { AppDispatch } from '../services/store';
 
 interface UserState {
   user: TUser | null;
@@ -38,8 +39,12 @@ export const registerUser = createAsyncThunk<
     setCookie('accessToken', response.accessToken);
     localStorage.setItem('refreshToken', response.refreshToken);
     return response.user;
-  } catch (err: any) {
-    return rejectWithValue(err.message || 'Ошибка регистрации');
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return rejectWithValue(err.message);
+    } else {
+      return rejectWithValue('Ошибка регистрации');
+    }
   }
 });
 
@@ -53,8 +58,12 @@ export const loginUser = createAsyncThunk<
     setCookie('accessToken', response.accessToken);
     localStorage.setItem('refreshToken', response.refreshToken);
     return response.user;
-  } catch (err: any) {
-    return rejectWithValue(err.message || 'Ошибка входа');
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return rejectWithValue(err.message);
+    } else {
+      return rejectWithValue('Ошибка входа');
+    }
   }
 });
 
@@ -66,7 +75,10 @@ export const checkUserAuth = createAsyncThunk<
   try {
     const response = await getUserApi();
     return response.user;
-  } catch (err: any) {
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error('checkUserAuth error:', err.message);
+    }
     deleteCookie('accessToken');
     localStorage.removeItem('refreshToken');
     return null;
@@ -81,18 +93,26 @@ export const updateUser = createAsyncThunk<
   try {
     const response = await updateUserApi(updateData);
     return response.user;
-  } catch (err: any) {
-    return rejectWithValue(err.message || 'Ошибка обновления профиля');
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return rejectWithValue(err.message);
+    } else {
+      return rejectWithValue('Ошибка обновления профиля');
+    }
   }
 });
+
+export const logoutUser = () => (dispatch: AppDispatch) => {
+  deleteCookie('accessToken');
+  localStorage.removeItem('refreshToken');
+  dispatch(logout());
+};
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
     logout: (state) => {
-      deleteCookie('accessToken');
-      localStorage.removeItem('refreshToken');
       state.user = null;
       state.isAuthChecked = true;
     }

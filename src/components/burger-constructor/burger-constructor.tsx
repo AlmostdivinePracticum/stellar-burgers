@@ -5,7 +5,8 @@ import {
   selectConstructorBun,
   selectConstructorIngredients,
   moveIngredient,
-  clearConstructor
+  clearConstructor,
+  removeIngredient
 } from '../../slices/burgerConstructorSlice';
 import { selectUser } from '../../slices/userSlice';
 import { createOrder, clearOrder } from '../../slices/orderSlice';
@@ -27,6 +28,10 @@ export const BurgerConstructor: FC = () => {
     if (index < ingredients.length - 1) {
       dispatch(moveIngredient({ from: index, to: index + 1 }));
     }
+  };
+
+  const onRemove = (id: string) => {
+    dispatch(removeIngredient(id));
   };
 
   const orderRequest = useAppSelector(
@@ -83,6 +88,7 @@ export const BurgerConstructor: FC = () => {
       isOrderDisabled={isOrderDisabled}
       onMoveUp={onMoveUp}
       onMoveDown={onMoveDown}
+      onRemove={onRemove}
     />
   );
 };

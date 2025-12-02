@@ -6,4 +6,5 @@ export type BurgerConstructorElementProps = {
   totalItems: number;
   onMoveUp: () => void;
   onMoveDown: () => void;
+  onRemove: () => void;
 };

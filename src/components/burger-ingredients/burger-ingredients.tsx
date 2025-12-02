@@ -1,9 +1,14 @@
-import { FC, useState, useRef, useEffect } from 'react';
+import { FC, useState, useRef, useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '@ui';
 import { useAppSelector } from '../../services/store';
 import { selectIngredients } from '../../slices/ingredientsSlice';
+import { TIngredientsCounters } from './type';
+import {
+  selectConstructorBun,
+  selectConstructorIngredients
+} from '../../slices/burgerConstructorSlice';
 
 export const BurgerIngredients: FC = () => {
   const allIngredients = useAppSelector(selectIngredients);
@@ -36,6 +41,22 @@ export const BurgerIngredients: FC = () => {
       titleSaucesRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const burgerConstructorIngredients = useAppSelector(
+    selectConstructorIngredients
+  );
+  const bun = useAppSelector(selectConstructorBun);
+
+  const ingredientsCounters = useMemo(() => {
+    const counters: TIngredientsCounters = {};
+    burgerConstructorIngredients.forEach((ingredient) => {
+      counters[ingredient._id] = (counters[ingredient._id] || 0) + 1;
+    });
+    if (bun && bun._id) {
+      counters[bun._id] = 2;
+    }
+    return counters;
+  }, [burgerConstructorIngredients, bun]);
+
   return (
     <BurgerIngredientsUI
       currentTab={currentTab}
@@ -49,6 +70,7 @@ export const BurgerIngredients: FC = () => {
       mainsRef={mainsRef}
       saucesRef={saucesRef}
       onTabClick={onTabClick}
+      ingredientsCounters={ingredientsCounters}
     />
   );
 };

@@ -39,8 +39,12 @@ export const createOrder = createAsyncThunk<TOrder, void, { state: RootState }>(
     try {
       const response = await orderBurgerApi(ingredientIds);
       return response.order;
-    } catch (err: any) {
-      return rejectWithValue(err.message || 'Ошибка создания заказа');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return rejectWithValue(err.message);
+      } else {
+        return rejectWithValue('Ошибка создания заказа');
+      }
     }
   }
 );
@@ -53,8 +57,12 @@ export const fetchOrderByNumber = createAsyncThunk<
   try {
     const response = await getOrderByNumberApi(number);
     return response.orders[0];
-  } catch (err: any) {
-    return rejectWithValue(err.message || 'Ошибка загрузки заказа');
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return rejectWithValue(err.message);
+    } else {
+      return rejectWithValue('Ошибка загрузки заказа');
+    }
   }
 });
 

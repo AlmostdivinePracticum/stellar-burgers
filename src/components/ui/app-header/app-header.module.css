@@ -26,10 +26,6 @@
     gap: 8px;
 }
 
-.link:hover {
-    color: var(--text-inactive-color);
-}
-
 .link_active {
   color: var(--text-primary-color);
 }

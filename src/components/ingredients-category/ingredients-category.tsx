@@ -11,19 +11,8 @@ const mockBurgerConstructor = {
 export const IngredientsCategory = forwardRef<
   HTMLUListElement,
   TIngredientsCategoryProps
->(({ title, titleRef, ingredients }, ref) => {
+>(({ title, titleRef, ingredients, ingredientsCounters }, ref) => {
   const burgerConstructor = mockBurgerConstructor;
-
-  const ingredientsCounters = useMemo(() => {
-    const counters: { [key: string]: number } = {};
-    burgerConstructor.ingredients.forEach((ingredient) => {
-      counters[ingredient._id] = (counters[ingredient._id] || 0) + 1;
-    });
-    if (burgerConstructor.bun) {
-      counters[burgerConstructor.bun._id] = 2;
-    }
-    return counters;
-  }, [burgerConstructor]);
 
   return (
     <IngredientsCategoryUI
