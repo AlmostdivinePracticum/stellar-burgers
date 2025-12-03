@@ -1,5 +1,21 @@
+export type TFeedData = {
+  orders?: {
+    _id: string;
+    status: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    number: number;
+    ingredients: string[];
+  }[];
+  total: number;
+  totalToday: number;
+  isLoading?: boolean;
+  error?: string | null;
+};
+
 export type FeedInfoUIProps = {
-  feed: any;
+  feed: TFeedData;
   readyOrders: number[];
   pendingOrders: number[];
 };

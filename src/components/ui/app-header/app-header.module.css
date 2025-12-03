@@ -18,6 +18,12 @@
   display: flex;
   text-decoration: none;
   color: var(--text-inactive-color);
+    font-family: 'Jet Brains Mono', monospace;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: normal;
+    white-space: nowrap;
+    gap: 8px;
 }
 
 .link_active {

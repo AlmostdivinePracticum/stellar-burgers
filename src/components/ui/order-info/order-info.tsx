@@ -8,13 +8,17 @@ import styles from './order-info.module.css';
 
 import { OrderInfoUIProps } from './type';
 import { OrderStatus } from '@components';
+import { TOrderStatusValue } from '../../order-status/type';
 
 export const OrderInfoUI: FC<OrderInfoUIProps> = memo(({ orderInfo }) => (
   <div className={styles.wrap}>
-    <h3 className={`text text_type_main-medium  pb-3 pt-10 ${styles.header}`}>
-      {orderInfo.name}
+    <h3 className={`text text_type_main-medium pb-3 pt-10 ${styles.header}`}>
+      #{String(orderInfo.number).padStart(6, '0')}
     </h3>
-    <OrderStatus status={orderInfo.status} />
+    <p className='text text_type_main-default text_color_inactive pb-2'>
+      {orderInfo.name}
+    </p>
+    <OrderStatus status={orderInfo.status as TOrderStatusValue} />
     <p className={`text text_type_main-medium pt-15 pb=6`}>Состав:</p>
     <ul className={`${styles.list} mb-8`}>
       {Object.values(orderInfo.ingredientsInfo).map((item, index) => (

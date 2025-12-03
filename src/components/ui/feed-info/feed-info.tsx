@@ -4,6 +4,8 @@ import styles from './feed-info.module.css';
 
 import { FeedInfoUIProps, HalfColumnProps, TColumnProps } from './type';
 
+import { Link } from 'react-router-dom';
+
 export const FeedInfoUI: FC<FeedInfoUIProps> = memo(
   ({ feed, readyOrders, pendingOrders }) => {
     const { total, totalToday } = feed;
@@ -35,7 +37,9 @@ const HalfColumn: FC<HalfColumnProps> = ({ orders, title, textColor }) => (
           style={{ color: textColor === 'blue' ? '#00cccc' : '#F2F2F3' }}
           key={index}
         >
-          {item}
+          <Link to={`/feed/${item}`} className={`${styles.link}`}>
+            {item}
+          </Link>
         </li>
       ))}
     </ul>

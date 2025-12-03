@@ -3,20 +3,20 @@ import { BurgerConstructorElementUI } from '@ui';
 import { BurgerConstructorElementProps } from './type';
 
 export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
-  ({ ingredient, index, totalItems }) => {
+  ({ ingredient, index, totalItems, onMoveUp, onMoveDown, onRemove }) => {
     const handleMoveDown = () => {};
 
     const handleMoveUp = () => {};
 
-    const handleClose = () => {};
+    const handleClose = () => onRemove();
 
     return (
       <BurgerConstructorElementUI
         ingredient={ingredient}
         index={index}
         totalItems={totalItems}
-        handleMoveUp={handleMoveUp}
-        handleMoveDown={handleMoveDown}
+        handleMoveUp={onMoveUp}
+        handleMoveDown={onMoveDown}
         handleClose={handleClose}
       />
     );
